@@ -211,7 +211,10 @@ export class VillageManager implements Automation {
 
     if (trigger <= manpower.value / manpower.maxValue && 100 <= manpower.value) {
       // Determine how many hunts are being performed.
-      const huntCount = Math.floor(manpower.value / 100);
+      const huntCount =
+        manpower.value < manpower.maxValue
+          ? Math.floor(manpower.value / 100)
+          : Math.floor(manpower.value / 5e8);
       this._host.engine.storeForSummary("hunt", huntCount);
       this._host.engine.iactivity("act.hunt", [this._host.renderAbsolute(huntCount)], "ks-hunt");
 
@@ -239,7 +242,18 @@ export class VillageManager implements Automation {
       }
 
       // Now actually perform the hunts.
-      this._host.game.village.huntAll();
+      if (manpower.value < manpower.maxValue) {
+        this._host.game.village.huntAll();
+      } else {
+        const squads = Math.floor(manpower.value / 5e8);
+        if (squads >= 1) {
+          this._host.game.resPool.addResEvent("manpower", -squads * 100);
+          this._host.game.village.gainHuntRes(squads);
+        }
+        if (squads >= 1000 && !this._host.game.challenges.getChallenge("pacifism").unlocked) {
+          this._host.game.challenges.getChallenge("pacifism").unlocked = true;
+        }
+      }
     }
   }
 
