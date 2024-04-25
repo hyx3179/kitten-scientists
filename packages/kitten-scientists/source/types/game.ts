@@ -85,6 +85,7 @@ export type Game = {
       active: boolean;
       calculateEffects: (model: unknown, game: Game) => void;
       researched: number;
+      unlocked: boolean;
     };
     isActive: (challenge: Challenge) => boolean;
   };
@@ -290,6 +291,7 @@ export type Game = {
       visible: boolean;
     }>;
     hasRes: (resources: Array<Price>) => boolean;
+    addResEvent: (name: string, value: number) => number;
   };
   /**
    * Saves the game and returns the save game.
@@ -413,6 +415,7 @@ export type Game = {
     getResProduction: () => { catnip: number };
     happiness: number;
     huntAll: () => void;
+    gainHuntRes: (squads: number) => void;
     jobs: Array<JobInfo>;
     leader: Kitten | null;
     /**
