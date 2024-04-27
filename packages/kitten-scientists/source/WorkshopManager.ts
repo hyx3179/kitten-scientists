@@ -232,6 +232,14 @@ export class WorkshopManager extends UpgradeManager implements Automation {
         // There is no checking if there actually exists a different target that could get built.
         amount = Math.min(amount, craftsPossible - craftsDone, material.consume / materialAmount);
       }
+
+      const limited = craft.limited
+        ? ((craft.max === -1 ? Number.MAX_VALUE : craft.max) -
+            this.getValueAvailable(craft.resource)) /
+          (this._host.game.getResCraftRatio(craft.resource) + 1)
+        : Number.MAX_VALUE;
+      amount = Math.min(amount, limited);
+
       request.countRequested = Math.max(
         0,
         craft.max === -1
