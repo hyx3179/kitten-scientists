@@ -6,6 +6,10 @@ on:
       - main
   workflow_dispatch:
 
+env:
+  KS_RELEASE_CHANNEL: nightly
+  NIGHTLY_BUILD: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -14,6 +18,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: print latest_commit
+        run: echo ${{ github.sha }}
 
       - name: Select NodeJS version
         uses: actions/setup-node@v4
@@ -29,11 +36,11 @@ jobs:
           echo "Host *.hyx3179.com" > $HOME/.ssh/config
           echo "  ProxyCommand cloudflared access ssh --hostname %h" >> $HOME/.ssh/config
           yarn install --immutable
+          export KS_VERSION=$(yarn kitten-scientists:version)
           yarn kitten-scientists:release
           mkdir ./public
           cp ./packages/kitten-scientists/output/kitten-scientists*.min.user.js ./public/kitten-scientists.user.js
-          wget -q https://${DEPLOY_URL}/scientists/ks.version.json -O ./public/ks.version.json
-          node generate-buildver.cjs
+          echo {\"KSbuildRevision\":\"${KS_VERSION}\"} > ./public/ks.version.json
 
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
