@@ -24,6 +24,8 @@ export default tseslint.config(
       "packages/*/vite.config.*",
 
       "*.config.*",
+
+      "generate-buildver.cjs",
     ],
   },
   {
