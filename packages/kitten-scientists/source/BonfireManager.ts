@@ -11,6 +11,7 @@ import {
 } from "./settings/BonfireSettings.js";
 import { cwarn } from "./tools/Log.js";
 import {
+  AutomationBuildings,
   BuildButton,
   Building,
   BuildingExt,
@@ -302,6 +303,13 @@ export class BonfireManager implements Automation {
 
     if (this.settings.gatherCatnip.enabled) {
       this.autoGather();
+    }
+
+    if (this.settings.automationBuildings.enabled) {
+      for (const auto of AutomationBuildings) {
+        const build = this.getBuild(auto);
+        build.meta.isAutomationEnabled = this.settings.automationBuildings.buildings[auto].enabled;
+      }
     }
   }
 

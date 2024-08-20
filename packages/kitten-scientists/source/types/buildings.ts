@@ -51,12 +51,22 @@ export const StagedBuildings = [
 ] as const;
 export type StagedBuilding = (typeof StagedBuildings)[number];
 
+export const AutomationBuildings = [
+  "calciner",
+  "steamworks",
+  "oilWell",
+  "factory",
+  "reactor",
+] as const;
+export type AutomationBuilding = (typeof AutomationBuildings)[number];
+
 // Returned from game.bld.getBuildingExt()
 export type BuildingMeta = {
   calculateEffects?: (model: unknown, game: Game) => void;
   description?: string;
   effects: { unicornsPerTickBase?: number };
   flavor?: string;
+  isAutomationEnabled?: boolean;
   label?: string;
   name: Building;
   noStackable?: boolean;

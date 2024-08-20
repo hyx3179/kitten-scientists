@@ -2,6 +2,7 @@ import { isNil } from "@oliversalzburg/js-utils/data/nil.js";
 import { KittenScientists } from "../KittenScientists.js";
 import { BonfireSettings } from "../settings/BonfireSettings.js";
 import { StagedBuilding } from "../types/index.js";
+import { BuildingAutomationSettingsUi } from "./BuildingAutomationSettingsUi.js";
 import { BuildingUpgradeSettingsUi } from "./BuildingUpgradeSettingsUi.js";
 import { SettingsSectionUi } from "./SettingsSectionUi.js";
 import { HeaderListItem } from "./components/HeaderListItem.js";
@@ -59,6 +60,10 @@ export class BonfireSettingsUi extends SettingsSectionUi<BonfireSettings> {
     listAddition.addChild(new HeaderListItem(this._host, this._host.engine.i18n("ui.additional")));
 
     listAddition.addChild(new BuildingUpgradeSettingsUi(this._host, this.setting.upgradeBuildings));
+
+    listAddition.addChild(
+      new BuildingAutomationSettingsUi(this._host, this.setting.automationBuildings),
+    );
 
     listAddition.addChild(
       new SettingListItem(
