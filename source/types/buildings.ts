@@ -51,6 +51,15 @@ export const StagedBuildings = [
 ] as const;
 export type StagedBuilding = (typeof StagedBuildings)[number];
 
+export const AutomationBuildings = [
+  "calciner",
+  "steamworks",
+  "oilWell",
+  "factory",
+  "reactor",
+] as const;
+export type AutomationBuilding = (typeof AutomationBuildings)[number];
+
 export type BuildingEffects = {
   // from game.bld
   academyMeteorBonus: number;
@@ -252,6 +261,7 @@ export type BuildingMeta = {
   description?: string;
   effects?: Partial<BuildingEffects>;
   flavor?: string;
+  isAutomationEnabled?: boolean;
   label?: string;
   name: Building;
   noStackable?: boolean;

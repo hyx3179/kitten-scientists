@@ -19,6 +19,7 @@ import type {
   ButtonModernModel,
   GameTab,
 } from "./types/index.js";
+import { AutomationBuildings } from "./types/index.js";
 
 export type BonfireTab = GameTab;
 
@@ -327,6 +328,13 @@ export class BonfireManager implements Automation {
 
     if (this.settings.gatherCatnip.enabled) {
       this.autoGather();
+    }
+
+    if (this.settings.automationBuildings.enabled) {
+      for (const auto of AutomationBuildings) {
+        const build = this.getBuild(auto);
+        build.meta.isAutomationEnabled = this.settings.automationBuildings.buildings[auto].enabled;
+      }
     }
   }
 

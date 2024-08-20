@@ -1,6 +1,7 @@
 import { type Maybe, isNil } from "@oliversalzburg/js-utils/data/nil.js";
 import { consumeEntriesPedantic } from "../tools/Entries.js";
 import { type Building, Buildings, type StagedBuilding, StagedBuildings } from "../types/index.js";
+import { BuildingAutomationSettings } from "./BuildingAutomationSettings.js";
 import { BuildingUpgradeSettings } from "./BuildingUpgradeSettings.js";
 import { Setting, SettingTrigger, SettingTriggerMax } from "./Settings.js";
 
@@ -64,6 +65,7 @@ export class BonfireSettings extends SettingTrigger {
   turnOnMagnetos: Setting;
   turnOnSteamworks: Setting;
   turnOnReactors: Setting;
+  automationBuildings: BuildingAutomationSettings;
   upgradeBuildings: BuildingUpgradeSettings;
 
   constructor(
@@ -73,6 +75,7 @@ export class BonfireSettings extends SettingTrigger {
     turnOnSteamworks = new Setting(),
     turnOnMagnetos = new Setting(),
     turnOnReactors = new Setting(),
+    automationBuildings = new BuildingAutomationSettings(),
     upgradeBuildings = new BuildingUpgradeSettings(),
   ) {
     super(enabled, trigger);
@@ -81,6 +84,7 @@ export class BonfireSettings extends SettingTrigger {
     this.turnOnSteamworks = turnOnSteamworks;
     this.turnOnMagnetos = turnOnMagnetos;
     this.turnOnReactors = turnOnReactors;
+    this.automationBuildings = automationBuildings;
     this.upgradeBuildings = upgradeBuildings;
   }
 
@@ -126,5 +130,6 @@ export class BonfireSettings extends SettingTrigger {
     this.turnOnMagnetos.enabled = settings.turnOnMagnetos?.enabled ?? this.turnOnMagnetos.enabled;
     this.turnOnReactors.enabled = settings.turnOnReactors?.enabled ?? this.turnOnReactors.enabled;
     this.upgradeBuildings.load(settings.upgradeBuildings);
+    this.automationBuildings.load(settings.automationBuildings);
   }
 }
