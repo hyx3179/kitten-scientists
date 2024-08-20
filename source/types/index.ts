@@ -245,6 +245,15 @@ export const Buildings = [
 ] as const;
 export type Building = (typeof Buildings)[number];
 
+export const AutomationBuildings = [
+  "calciner",
+  "steamworks",
+  "oilWell",
+  "factory",
+  "reactor",
+] as const;
+export type AutomationBuilding = (typeof AutomationBuildings)[number];
+
 export const StagedBuildings = [
   "broadcasttower",
   "dataCenter",

@@ -240,6 +240,7 @@ export type UnsafeBuilding = {
   description?: string;
   effects?: Partial<Record<BuildingEffect, number>>;
   flavor?: string;
+  isAutomationEnabled?: boolean;
   jammed?: boolean;
   label?: string;
   name: Building;

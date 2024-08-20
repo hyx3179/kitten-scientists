@@ -18,7 +18,7 @@ import type {
   UnsafeBuilding,
 } from "./types/buildings.js";
 import type { UnsafeBuildingBtnModel } from "./types/core.js";
-import type { Building } from "./types/index.js";
+import type { AutomationBuildings, Building } from "./types/index.js";
 
 export class BonfireManager implements Automation {
   private readonly _host: KittenScientists;
@@ -323,6 +323,13 @@ export class BonfireManager implements Automation {
 
     if (this.settings.gatherCatnip.enabled) {
       this.autoGather();
+    }
+
+    if (this.settings.automationBuildings.enabled) {
+      for (const auto of AutomationBuildings) {
+        const build = this.getBuild(auto);
+        build.meta.isAutomationEnabled = this.settings.automationBuildings.buildings[auto].enabled;
+      }
     }
   }
 
