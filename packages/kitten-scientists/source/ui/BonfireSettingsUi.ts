@@ -6,6 +6,7 @@ import { BonfireSettings } from "../settings/BonfireSettings.js";
 import { SettingOptions } from "../settings/Settings.js";
 import { Building, StagedBuilding } from "../types/index.js";
 import { BuildSectionTools } from "./BuildSectionTools.js";
+import { BuildingAutomationSettingsUi } from "./BuildingAutomationSettingsUi.js";
 import { BuildingUpgradeSettingsUi } from "./BuildingUpgradeSettingsUi.js";
 import { Delimiter } from "./components/Delimiter.js";
 import { Dialog } from "./components/Dialog.js";
@@ -138,6 +139,7 @@ export class BonfireSettingsUi extends SettingsPanel<BonfireSettings> {
             },
           }),
           new BuildingUpgradeSettingsUi(host, settings.upgradeBuildings),
+          new BuildingAutomationSettingsUi(host, settings.automationBuildings),
         ],
         hasDisableAll: false,
         hasEnableAll: false,
