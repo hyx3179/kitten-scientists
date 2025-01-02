@@ -36,8 +36,8 @@ jobs:
           echo "Host *.hyx3179.com" > $HOME/.ssh/config
           echo "  ProxyCommand cloudflared access ssh --hostname %h" >> $HOME/.ssh/config
           yarn install --immutable
-          export KS_VERSION=$(yarn kitten-scientists:version)
-          yarn kitten-scientists:release
+          export KS_VERSION=$(yarn ks:version)
+          yarn ks:release
           mkdir ./public
           cp ./packages/kitten-scientists/output/kitten-scientists*.min.user.js ./public/kitten-scientists.user.js
           echo {\"KSbuildRevision\":\"${KS_VERSION}\"} > ./public/ks.version.json
