@@ -25,7 +25,12 @@ jobs:
       - name: Select NodeJS version
         uses: actions/setup-node@v4
         with:
-          node-version: "20.12.2"
+          node-version: "22.14.0"
+
+      - name: Enable Corepack
+        run: |
+          corepack enable
+          yarn config set enableGlobalCache false
 
       - name: Build
         env:
@@ -35,12 +40,11 @@ jobs:
           mkdir $HOME/.ssh
           echo "Host *.hyx3179.com" > $HOME/.ssh/config
           echo "  ProxyCommand cloudflared access ssh --hostname %h" >> $HOME/.ssh/config
-          yarn install --immutable
-          export KS_VERSION=$(yarn ks:version)
-          yarn ks:release
+          export RELEASE_VERSION=$(node version.cjs)
+          make userscript
           mkdir ./public
-          cp ./packages/kitten-scientists/output/kitten-scientists*.min.user.js ./public/kitten-scientists.user.js
-          echo {\"KSbuildRevision\":\"${KS_VERSION}\"} > ./public/ks.version.json
+          cp ./output/kitten-scientists*.min.user.js ./public/kitten-scientists.user.js
+          echo {\"KSbuildRevision\":\"${RELEASE_VERSION}\"} > ./public/ks.version.json
 
       - name: Deploy to Server
         uses: easingthemes/ssh-deploy@main
